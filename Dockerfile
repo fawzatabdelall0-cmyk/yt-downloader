@@ -1,12 +1,19 @@
 FROM node:18
 
-RUN apt update && apt install -y ffmpeg python3 python3-pip
-RUN pip3 install yt-dlp
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    python3 \
+    python3-full \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install --break-system-packages yt-dlp
 
 WORKDIR /app
 
-COPY . .
-
+COPY package*.json ./
 RUN npm install
+
+COPY . .
 
 CMD ["node", "server.js"]
