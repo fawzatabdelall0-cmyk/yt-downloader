@@ -14,7 +14,13 @@ app.post("/download", (req, res) => {
 
   const filename = `audio_${Date.now()}.mp3`;
 
-  const command = `yt-dlp --cookies youtube.com_cookies.txt --js-runtimes node -x --audio-format mp3 -o "${filename}" "${url}"`;
+  const command = `yt-dlp --cookies youtube.com_cookies.txt \
+--user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" \
+--add-header "Accept-Language: en-US,en;q=0.9" \
+--add-header "Referer: https://www.youtube.com/" \
+--sleep-interval 5 --max-sleep-interval 10 \
+--js-runtimes node \
+-x --audio-format mp3 -o "${filename}" "${url}"`;
 
   exec(command, (error) => {
     if (error) {
