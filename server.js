@@ -14,7 +14,7 @@ app.post("/download", (req, res) => {
 
   const filename = `audio_${Date.now()}.mp3`;
 
-  const command = `yt-dlp -x --audio-format mp3 -o "${filename}" "${url}"`;
+  const command = `yt-dlp --js-runtimes node -x --audio-format mp3 -o "${filename}" "${url}"`;
 
   exec(command, (error) => {
     if (error) {
